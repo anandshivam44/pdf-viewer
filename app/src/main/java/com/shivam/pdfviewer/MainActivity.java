@@ -1,5 +1,6 @@
 package com.shivam.pdfviewer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -31,11 +32,26 @@ public class MainActivity extends AppCompatActivity {
         /**
          *Initialized Recycler View
          * */
-        MyListAdapter adapter = new MyListAdapter(files);
+        MyListAdapter adapter = new MyListAdapter(files, new MyListAdapter.ItemEvents() {
+            @Override
+            public void onItemClicked(int position) {
+                /*On Item Clicked Open PDF in a New Activity from Main Activity*/
+                /*Take meta-data of PDF i.e. PDF Name and Path from MainActivity.java to New Activity*/
+                openPDFViewerActivity(position);
+            }
+        });
         pdfList.setHasFixedSize(true);
         pdfList.setLayoutManager(new LinearLayoutManager(this));
         pdfList.setAdapter(adapter);
 
+
+    }
+
+    private void openPDFViewerActivity(int position) {
+        Intent i = new Intent(MainActivity.this, PDFViewerActivity.class);
+        i.putExtra("name",files.get(position).getName());
+        i.putExtra("path",files.get(position).getPath());
+        startActivity(i);
 
     }
 

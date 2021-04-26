@@ -14,9 +14,11 @@ import java.util.ArrayList;
 
 public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder> {
     ArrayList<PDFDoc> files;
+    ItemEvents itemEventsObject;
 
-    public MyListAdapter(ArrayList<PDFDoc> files) {
+    public MyListAdapter(ArrayList<PDFDoc> files,ItemEvents itemEventsObject) {
         this.files = files;
+        this.itemEventsObject=itemEventsObject;
     }
 
     @Override
@@ -31,6 +33,12 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         PDFDoc viewHolderData = files.get(position);
         holder.textView.setText(viewHolderData.getName());
+        holder.textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemEventsObject.onItemClicked(position);
+            }
+        });
     }
 
 
@@ -40,6 +48,7 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        View viewHolder;
         public ImageView imageView;
         public TextView textView;
         public RelativeLayout relativeLayout;
@@ -47,6 +56,11 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
         public ViewHolder(View itemView) {
             super(itemView);
             this.textView = (TextView) itemView.findViewById(R.id.textView);
+            this.viewHolder=itemView.findViewById(R.id.main_view_holder);
         }
+    }
+    public interface ItemEvents{
+
+        void onItemClicked(int position);
     }
 }
