@@ -58,7 +58,7 @@ public class PDFViewerActivity extends AppCompatActivity implements OnPageChange
 
     @Override
     public void onPageChanged(int page, int pageCount) {
-        Toast.makeText(this, "Page Changed", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Page Changed", Toast.LENGTH_SHORT).show();
     }
 
     @Override

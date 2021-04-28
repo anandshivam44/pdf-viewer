@@ -32,8 +32,9 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         PDFDoc viewHolderData = files.get(position);
-        holder.textView.setText(viewHolderData.getName());
-        holder.textView.setOnClickListener(new View.OnClickListener() {
+        holder.pdfName.setText(viewHolderData.getName());
+        holder.pdfLocation.setText(viewHolderData.getPath());
+        holder.viewHolderRecyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 itemEventsObject.onItemClicked(position);
@@ -50,13 +51,16 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         View viewHolder;
         public ImageView imageView;
-        public TextView textView;
-        public RelativeLayout relativeLayout;
+        public TextView pdfName;
+        public TextView pdfLocation;
+        public RelativeLayout viewHolderRecyclerView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            this.textView = (TextView) itemView.findViewById(R.id.textView);
+            this.viewHolderRecyclerView =itemView.findViewById(R.id.view_holder);
+            this.pdfName = (TextView) itemView.findViewById(R.id.pdf_name);
             this.viewHolder=itemView.findViewById(R.id.main_view_holder);
+            this.pdfLocation=itemView.findViewById(R.id.pdf_location);
         }
     }
     public interface ItemEvents{

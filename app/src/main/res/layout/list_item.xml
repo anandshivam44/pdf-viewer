@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/relativeLayout"
+    android:id="@+id/view_holder"
+    android:gravity="center_vertical"
     android:layout_width="match_parent"
     android:layout_height="?android:attr/listPreferredItemHeightLarge">
 
+    <ImageView
+        android:id="@+id/pdf_vector"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/vector_pdf"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="8dp"
+        />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/pdf_name"
+        android:text="Sample PDF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
+        android:layout_toRightOf="@+id/pdf_vector"
+        android:layout_alignTop="@+id/pdf_vector"
         android:textSize="16sp" />
+    <TextView
+        android:id="@+id/pdf_location"
+        android:text="Sample location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/pdf_vector"
+        android:layout_below="@+id/pdf_name"
+        android:textSize="12sp" />
 
 </RelativeLayout>
