@@ -5,10 +5,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -29,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<PDFDoc> files;//list of all pdf files
     private RecyclerView pdfList;
     MyListAdapter adapter;
+    ShimmerFrameLayout container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: ");
 
         pdfList = findViewById(R.id.recycler_list_pdf);
-
+        container = (ShimmerFrameLayout) findViewById(R.id.shimmer_view_container);
         files = new ArrayList<>();//initialized empty object
 
         PermissionManager permissionManager = new PermissionManager(this);
@@ -69,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onPermissionGranted: ");
                 Log.d(TAG, "Start search");
                 startSearchingPdf(Environment.getExternalStorageDirectory());// crawl and search external directory for all PDF's
+                container.setVisibility(View.GONE);
+                pdfList.setVisibility(View.VISIBLE);
             }
         });
 
@@ -154,8 +161,9 @@ public class MainActivity extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Log.d(TAG, "Start search");
                     startSearchingPdf(Environment.getExternalStorageDirectory());// crawl and search external directory for all PDF's
-
                     adapter.notifyDataSetChanged();
+                    container.setVisibility(View.GONE);
+                    pdfList.setVisibility(View.VISIBLE);
                 } else {
                     // Permission was denied.......
                     Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
